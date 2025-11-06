@@ -30,7 +30,7 @@ If you use this dataset, please cite the paper and the dataset:
 }
 
 %Dataset
-@dataset{⚑DatasetKey,
+@dataset{XIoMTDataset,
   title       = {X-IoMT},
   author      = {Rui P. Pinto, Bruno M. C. Silva, Pedro R. M. Inácio},
   year        = {2025},
