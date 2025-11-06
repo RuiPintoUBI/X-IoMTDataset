@@ -151,4 +151,4 @@ Maintainer: ⚑Rui Pedro Pinto (UBI) — ⚑rui.pinto@ubi.pt
 Please use GitHub Issues for bug reports and questions.
 
 ## Acknowledgments
-This work is funded by FCT/MECI through national funds and when applicable co-funded EU funds under UID/50008: Instituto de Telecomunicações.
+This work is funded by national funds through FCT – Fundação para a Ciência e a Tecnologia, I.P., and, when eligible, co-funded by EU funds under project/support UID/50008/2025 – Instituto de Telecomunicações, with DOI identifier <https://doi.org/10.54499/UID/50008/2025>
