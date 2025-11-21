@@ -21,12 +21,12 @@ If you use this dataset, please cite the paper and the dataset:
 
 ```bibtex
 %Article
-@article{⚑YourKey,
-  title   = {⚑Exact Paper Title},
-  author  = {⚑Authors},
-  journal = {⚑Venue/Journal},
-  year    = {⚑Year},
-  doi     = {⚑DOI}
+@inproceedings{NCA25RP,
+  title     = {Anomaly Detection in the Internet of Medical Things: Design and Evaluation of a Cross Layer Dataset},
+  author    = {Rui P. Pinto and Bruno M. C. Silva and Pedro R. M. In{\'a}cio},
+  booktitle = {Proceedings of the IEEE 23rd International Symposium on Network Computing and Applications (NCA 2025)},
+  year      = {2025},
+  doi       = {in press}
 }
 
 %Dataset
