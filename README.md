@@ -21,13 +21,17 @@ If you use this dataset, please cite the paper and the dataset:
 
 ```bibtex
 %Article
-@inproceedings{NCA25RP,
-  title     = {Anomaly Detection in the Internet of Medical Things: Design and Evaluation of a Cross Layer Dataset},
-  author    = {Rui P. Pinto and Bruno M. C. Silva and Pedro R. M. In{\'a}cio},
-  booktitle = {Proceedings of the IEEE 23rd International Symposium on Network Computing and Applications (NCA 2025)},
-  year      = {2025},
-  doi       = {in press}
-}
+@INPROCEEDINGS{11261583,
+  author={Pinto, Rui P. and Silva, Bruno M. C. and Inácio, Pedro R. M.},
+  booktitle={2025 23rd International Symposium on Network Computing and Applications (NCA)}, 
+  title={Anomaly Detection in the Internet of Medical Things: Design and Evaluation of a Cross Layer Dataset}, 
+  year={2025},
+  volume={},
+  number={},
+  pages={255-262},
+  keywords={Performance evaluation;Cross layer design;Internet of Medical Things;Machine learning;Reliability;Labeling;Computer crime;Anomaly detection;Standards;Monitoring;Internet of Medical Things (IoMT);Machine Learning (ML);Anomaly Detection;Cybersecurity;Data Labeling},
+  doi={10.1109/NCA67271.2025.00047}}
+
 
 %Dataset
 @dataset{XIoMTDataset,
