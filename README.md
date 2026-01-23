@@ -16,6 +16,8 @@
 - **Capture scope:** traffic between IoT nodes and servers/MQTT brokers;
 - **Intended use:** anomaly detection, traffic classification, IoT/IoMT security research, benchmarking.
 
+All experiments were conducted using fixed random seeds to ensure repeatability (NumPy and scikit-learn seed = 42; TensorFlow seed = 42). Dataset generation and model training were performed on a workstation equipped with an NVIDIA GeForce RTX 5060 Ti GPU and an AMD-class CPU, running a Linux-based operating system. The software environment included Python 3.10, scikit-learn 1.4, NumPy 1.26, pandas 2.1, and TensorFlow 2.21. These settings are reported to facilitate reproducibility and fair comparison in future studies.
+
 ## Cite this work
 If you use this dataset, please cite the paper and the dataset:
 
