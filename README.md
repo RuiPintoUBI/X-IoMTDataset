@@ -149,6 +149,7 @@ Dataset features obtained from packet capture conversion and curated labeling:
 
 ## Changelog
 v1.0 (2025-11): Initial public release. 
+v1.1 (2026-01): Improved anomalies and added a small explained implementation.
 
 ## Contact
 Maintainer: ⚑Rui Pedro Pinto (UBI) — ⚑rui.pinto@ubi.pt
