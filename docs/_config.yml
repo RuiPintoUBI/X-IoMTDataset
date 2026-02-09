@@ -1,4 +1,4 @@
-title: X-IoMT
-description: IoMT Cross Layer Dataset (X-IoMT) — cross-layer anomaly detection dataset with adversarial augmentations (FGSM/PGD).
 theme: jekyll-theme-cayman
+title: X-IoMT Dataset
+description: Cross-layer IoMT anomaly detection dataset
 show_downloads: true
