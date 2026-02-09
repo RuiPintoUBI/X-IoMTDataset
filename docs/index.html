@@ -4,110 +4,178 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>X-IoMT — IoMT Cross Layer Dataset</title>
-  <meta name="description" content="IoMT Cross Layer Dataset (X-IoMT) — cross-layer anomaly detection dataset with adversarial FGSM/PGD samples." />
+  <meta name="description" content="IoMT Cross Layer Dataset (X-IoMT) — cross-layer anomaly detection dataset with FGSM/PGD adversarial samples." />
+
+  <!-- Nice font (optional) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg: #0b1020;
+      /* Light theme (default) */
+      --bg: #ffffff;
+      --bg2:#f6f7fb;
+      --panel: rgba(255,255,255,.78);
+      --line: rgba(15, 23, 42, .10);
+      --text:#0f172a;
+      --muted: rgba(15, 23, 42, .72);
+      --faint: rgba(15, 23, 42, .55);
+
+      --accent:#2563eb; /* blue */
+      --accent2:#7c3aed; /* violet */
+      --good:#16a34a;
+      --warn:#d97706;
+
+      --shadow: 0 18px 60px rgba(2, 6, 23, .12);
+      --r: 16px;
+
+      --heroH: 340px;
+      --max: 980px;
+    }
+
+    /* Dark theme */
+    [data-theme="dark"]{
+      --bg:#070A14;
+      --bg2:#0b1020;
       --panel: rgba(255,255,255,.06);
-      --panel2: rgba(255,255,255,.08);
+      --line: rgba(255,255,255,.12);
       --text: rgba(255,255,255,.92);
       --muted: rgba(255,255,255,.70);
-      --faint: rgba(255,255,255,.55);
-      --line: rgba(255,255,255,.12);
-      --accent: #7dd3fc; /* sky */
-      --accent2:#a78bfa; /* violet */
-      --good:#34d399;
-      --warn:#fbbf24;
-      --bad:#fb7185;
-      --shadow: 0 20px 60px rgba(0,0,0,.45);
-      --radius: 18px;
+      --faint: rgba(255,255,255,.52);
+      --shadow: 0 22px 80px rgba(0,0,0,.45);
     }
 
     *{box-sizing:border-box}
-    html,body{height:100%}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--text);
       background:
-        radial-gradient(1200px 700px at 10% 0%, rgba(125,211,252,.18), transparent 55%),
-        radial-gradient(900px 600px at 90% 15%, rgba(167,139,250,.18), transparent 55%),
-        radial-gradient(800px 500px at 45% 120%, rgba(52,211,153,.12), transparent 60%),
-        var(--bg);
-      color: var(--text);
-      line-height:1.55;
+        radial-gradient(900px 420px at 10% 0%, rgba(37,99,235,.14), transparent 60%),
+        radial-gradient(900px 420px at 90% 0%, rgba(124,58,237,.12), transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
     }
 
     a{color:var(--accent); text-decoration:none}
     a:hover{text-decoration:underline}
-    code, pre{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    }
 
-    /* Layout */
-    .wrap{max-width:1100px; margin:0 auto; padding:28px 18px 80px}
+    .wrap{max-width:var(--max); margin:0 auto; padding: 22px 16px 80px}
+
+    /* Top nav */
     .nav{
-      position:sticky; top:0; z-index:10;
+      position:sticky; top:0; z-index:20;
       backdrop-filter: blur(10px);
-      background: linear-gradient(to bottom, rgba(11,16,32,.85), rgba(11,16,32,.45));
+      background: color-mix(in oklab, var(--bg) 82%, transparent);
       border-bottom:1px solid var(--line);
     }
     .nav-inner{
-      max-width:1100px; margin:0 auto;
-      padding:14px 18px;
+      max-width:var(--max);
+      margin:0 auto;
+      padding: 12px 16px;
       display:flex; align-items:center; justify-content:space-between; gap:14px;
     }
     .brand{
       display:flex; align-items:center; gap:10px;
-      font-weight:800; letter-spacing:.2px;
+      font-weight:800; letter-spacing:-.2px;
     }
-    .dot{
-      width:11px; height:11px; border-radius:50%;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow:0 0 0 4px rgba(125,211,252,.12);
+    .brand-badge{
+      width:34px; height:34px; border-radius:12px;
+      border:1px solid var(--line);
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.6), transparent 55%),
+        linear-gradient(135deg,
+          color-mix(in oklab, var(--accent) 22%, transparent),
+          color-mix(in oklab, var(--accent2) 18%, transparent)
+        );
+      display:grid; place-items:center;
+      box-shadow: 0 10px 24px rgba(0,0,0,.08);
+      font-size:13px;
     }
-    .nav a{color:var(--muted)}
-    .nav a:hover{color:var(--text)}
-    .nav-links{display:flex; gap:14px; flex-wrap:wrap; justify-content:flex-end}
+    .brand small{display:block; font-weight:600; color:var(--muted); margin-top:2px; letter-spacing:0}
+    .links{
+      display:flex; flex-wrap:wrap; gap:6px;
+      align-items:center; justify-content:flex-end;
+    }
+    .links a{
+      color:var(--muted);
+      padding:8px 10px;
+      border-radius: 12px;
+      border:1px solid transparent;
+      font-weight:600;
+      font-size: 13px;
+    }
+    .links a:hover{
+      color:var(--text);
+      text-decoration:none;
+      background: color-mix(in oklab, var(--panel) 65%, transparent);
+      border-color: var(--line);
+    }
+    .btn-icon{
+      cursor:pointer;
+      padding:8px 10px;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+      color:var(--text);
+      font-weight:700;
+      font-size:13px;
+    }
+    .btn-icon:hover{filter:brightness(1.02)}
+    .btn-icon:active{transform:translateY(1px)}
 
     /* Hero */
     .hero{
-      margin-top:22px;
-      border-radius: calc(var(--radius) + 6px);
+      margin-top:18px;
+      border-radius: calc(var(--r) + 10px);
       overflow:hidden;
-      box-shadow: var(--shadow);
       border:1px solid var(--line);
+      box-shadow: var(--shadow);
       background:
-        linear-gradient( to bottom, rgba(0,0,0,.25), rgba(11,16,32,.92) 70% ),
+        linear-gradient(180deg, rgba(0,0,0,.14), color-mix(in oklab, var(--bg) 90%, transparent) 70%),
         url("iomt.png");
       background-size: cover;
-      background-position:center;
+      background-position: center;
+      min-height: var(--heroH);
       position:relative;
+      isolation:isolate;
+    }
+    [data-theme="dark"] .hero{
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.18), rgba(7,10,20,.92) 72%),
+        url("iomt.png");
     }
     .hero::after{
       content:"";
       position:absolute; inset:0;
       background:
-        radial-gradient(900px 400px at 15% 20%, rgba(125,211,252,.25), transparent 55%),
-        radial-gradient(700px 420px at 85% 10%, rgba(167,139,250,.22), transparent 55%);
+        radial-gradient(900px 420px at 12% 18%, rgba(37,99,235,.24), transparent 60%),
+        radial-gradient(900px 420px at 88% 10%, rgba(124,58,237,.18), transparent 60%);
+      mix-blend-mode: multiply;
+      opacity:.65;
       pointer-events:none;
+      z-index:0;
+    }
+    [data-theme="dark"] .hero::after{
       mix-blend-mode: screen;
+      opacity:.9;
     }
     .hero-inner{
-      position:relative;
-      padding:44px 28px 28px;
+      position:relative; z-index:1;
+      padding: 28px 22px 22px;
       display:grid;
       grid-template-columns: 1.35fr .65fr;
-      gap:18px;
+      gap:16px;
       align-items:end;
     }
     .kicker{
       display:inline-flex;
       gap:10px; align-items:center;
       padding:6px 10px;
-      border:1px solid var(--line);
-      background: rgba(0,0,0,.22);
       border-radius:999px;
+      border:1px solid var(--line);
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
       color:var(--muted);
       font-size:13px;
       width:fit-content;
@@ -115,179 +183,199 @@
     .pill{
       padding:2px 8px;
       border-radius:999px;
-      background: rgba(125,211,252,.14);
-      border:1px solid rgba(125,211,252,.25);
-      color:var(--accent);
-      font-weight:700;
+      font-weight:800;
+      border:1px solid color-mix(in oklab, var(--accent) 30%, transparent);
+      background: color-mix(in oklab, var(--accent) 10%, transparent);
+      color: color-mix(in oklab, var(--accent) 92%, var(--text));
       font-size:12px;
     }
     h1{
-      margin:14px 0 10px;
-      font-size: clamp(30px, 4vw, 46px);
-      line-height:1.05;
-      letter-spacing:-.6px;
+      margin: 12px 0 10px;
+      font-size: clamp(32px, 4.6vw, 52px);
+      line-height:1.03;
+      letter-spacing:-1px;
     }
     .subtitle{
       margin:0;
       color:var(--muted);
       font-size: 15.5px;
-      max-width: 70ch;
+      max-width: 75ch;
     }
-    .hero-cta{
-      display:flex; gap:10px; flex-wrap:wrap;
+    .cta{
+      display:flex; flex-wrap:wrap; gap:10px;
       margin-top:16px;
     }
     .btn{
       display:inline-flex; align-items:center; gap:10px;
-      padding:11px 14px;
-      border-radius:12px;
+      padding:10px 12px;
+      border-radius: 14px;
       border:1px solid var(--line);
-      background: rgba(255,255,255,.06);
+      background: color-mix(in oklab, var(--panel) 75%, transparent);
       color:var(--text);
-      font-weight:700;
-      cursor:pointer;
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
-      transition: transform .08s ease, background .12s ease, border-color .12s ease;
+      font-weight:800;
+      font-size: 13.5px;
+      box-shadow: 0 14px 35px rgba(0,0,0,.10);
+      transition: transform .12s ease;
     }
-    .btn:hover{
-      transform: translateY(-1px);
-      background: rgba(255,255,255,.09);
-      border-color: rgba(255,255,255,.18);
-      text-decoration:none;
-    }
+    .btn:hover{transform: translateY(-2px); text-decoration:none}
     .btn.primary{
-      background: linear-gradient(135deg, rgba(125,211,252,.22), rgba(167,139,250,.18));
-      border-color: rgba(125,211,252,.25);
+      border-color: color-mix(in oklab, var(--accent) 30%, var(--line));
+      background: linear-gradient(135deg,
+        color-mix(in oklab, var(--accent) 18%, transparent),
+        color-mix(in oklab, var(--accent2) 14%, transparent)
+      );
     }
-    .btn small{font-weight:700; color:var(--faint)}
-    .hero-aside{
-      background: rgba(0,0,0,.28);
+
+    .aside{
+      border-radius: var(--r);
       border:1px solid var(--line);
-      border-radius: var(--radius);
-      padding:14px 14px 12px;
+      background: color-mix(in oklab, var(--panel) 75%, transparent);
+      padding:14px;
     }
-    .stat{
+    .metric{
       display:flex; justify-content:space-between; gap:10px;
       padding:10px 10px;
-      border-radius:14px;
-      background: rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.09);
+      border-radius: 14px;
+      border:1px solid color-mix(in oklab, var(--line) 80%, transparent);
+      background: color-mix(in oklab, var(--panel) 65%, transparent);
       margin-top:10px;
     }
-    .stat:first-child{margin-top:0}
-    .stat b{font-size:14px}
-    .stat span{color:var(--muted); font-size:13px; text-align:right}
+    .metric:first-child{margin-top:0}
+    .metric b{font-size:13.5px}
+    .metric span{font-size:12.8px; color:var(--muted); text-align:right}
 
     /* Sections */
-    section{margin-top:26px}
+    section{margin-top:20px}
+    .card{
+      border-radius: var(--r);
+      border:1px solid var(--line);
+      background: color-mix(in oklab, var(--panel) 78%, transparent);
+      box-shadow: 0 16px 55px rgba(0,0,0,.06);
+      padding: 18px;
+    }
+    [data-theme="dark"] .card{
+      box-shadow: 0 20px 70px rgba(0,0,0,.18);
+    }
+    .card h2{
+      margin:0 0 10px;
+      font-size: 18px;
+      letter-spacing:-.3px;
+    }
+    .card p{margin:0; color:var(--muted)}
+
     .grid{
       display:grid;
       grid-template-columns: repeat(12, 1fr);
       gap:14px;
     }
-    .card{
-      grid-column: span 12;
-      background: var(--panel);
-      border:1px solid var(--line);
-      border-radius: var(--radius);
-      padding:18px;
-      box-shadow: 0 18px 45px rgba(0,0,0,.25);
-    }
-    .card h2{
-      margin:0 0 10px;
-      font-size:18px;
-      letter-spacing:-.2px;
-    }
-    .card p{margin:0; color:var(--muted)}
-    .card + .card{margin-top:14px}
+    .span12{grid-column: span 12}
+    .span6{grid-column: span 6}
+    .span4{grid-column: span 4}
 
-    .cards-3 .card{grid-column: span 4}
-    .cards-2 .card{grid-column: span 6}
-
-    .tagrow{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
+    .badges{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
     .tag{
       padding:6px 10px;
       border-radius:999px;
-      font-size:12.5px;
       border:1px solid var(--line);
-      background: rgba(255,255,255,.05);
       color:var(--muted);
+      font-size: 12.5px;
+      background: color-mix(in oklab, var(--panel) 65%, transparent);
     }
-    .tag.good{border-color: rgba(52,211,153,.25); background: rgba(52,211,153,.08); color: rgba(200,255,231,.92)}
-    .tag.warn{border-color: rgba(251,191,36,.25); background: rgba(251,191,36,.08); color: rgba(255,240,200,.92)}
-    .tag.bad{border-color: rgba(251,113,133,.28); background: rgba(251,113,133,.08); color: rgba(255,220,228,.92)}
+    .tag.good{border-color: color-mix(in oklab, var(--good) 35%, var(--line)); color: color-mix(in oklab, var(--good) 80%, var(--text))}
+    .tag.warn{border-color: color-mix(in oklab, var(--warn) 35%, var(--line)); color: color-mix(in oklab, var(--warn) 80%, var(--text))}
 
-    /* Table */
-    .table-wrap{overflow:auto; border-radius:14px; border:1px solid var(--line); margin-top:10px}
+    pre{
+      margin:10px 0 0;
+      padding: 14px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: color-mix(in oklab, var(--bg2) 70%, transparent);
+      overflow:auto;
+      font-size: 12.8px;
+      line-height:1.5;
+    }
+    [data-theme="dark"] pre{
+      background: rgba(0,0,0,.24);
+    }
+    code, .mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    .table-wrap{
+      overflow:auto;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      margin-top:12px;
+    }
     table{
       width:100%;
       border-collapse:collapse;
       min-width: 880px;
-      background: rgba(0,0,0,.18);
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
     }
     th, td{
-      padding:10px 12px;
-      border-bottom:1px solid rgba(255,255,255,.08);
+      padding: 10px 12px;
+      border-bottom:1px solid color-mix(in oklab, var(--line) 90%, transparent);
+      font-size: 13px;
       vertical-align:top;
-      font-size:13.5px;
     }
     th{
-      text-align:left;
-      color: rgba(255,255,255,.9);
       position:sticky; top:0;
-      background: rgba(11,16,32,.86);
-      backdrop-filter: blur(8px);
+      background: color-mix(in oklab, var(--bg) 86%, transparent);
+      backdrop-filter: blur(10px);
+      text-align:left;
+      color: var(--text);
       z-index:2;
     }
     td{color:var(--muted)}
-    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
-    .muted{color:var(--muted)}
-    .faint{color:var(--faint)}
 
-    /* Code blocks */
-    pre{
-      margin:10px 0 0;
-      padding:14px;
+    details{
+      margin-top:12px;
       border-radius:14px;
       border:1px solid var(--line);
-      background: rgba(0,0,0,.22);
-      overflow:auto;
-    }
-
-    /* Details/Accordion */
-    details{
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      border-radius: 14px;
-      padding:12px 12px;
-      margin-top:12px;
+      background: color-mix(in oklab, var(--panel) 68%, transparent);
+      padding: 12px;
     }
     summary{
       cursor:pointer;
-      color: rgba(255,255,255,.88);
       font-weight:800;
       list-style:none;
     }
     summary::-webkit-details-marker{display:none}
-    summary span{color:var(--muted); font-weight:700; margin-left:8px; font-size:13px}
+    summary span{font-weight:600; color:var(--muted); margin-left:8px; font-size:13px}
 
-    /* Footer */
+    .copy-row{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:10px;
+      align-items:center;
+    }
+    .copy{
+      cursor:pointer;
+      padding:9px 11px;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
+      font-weight:800;
+      font-size:13px;
+      color:var(--text);
+    }
+    .copy:hover{filter:brightness(1.02)}
+    .note{color:var(--faint); font-size: 13px}
+
     footer{
-      margin-top:42px;
+      margin-top:40px;
       padding-top:18px;
       border-top:1px solid var(--line);
       color:var(--faint);
       display:flex;
-      flex-wrap:wrap;
-      gap:12px;
-      align-items:center;
       justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
     }
 
-    /* Responsive */
     @media (max-width: 900px){
-      .hero-inner{grid-template-columns: 1fr; padding:34px 18px 18px}
-      .cards-3 .card, .cards-2 .card{grid-column: span 12}
+      .hero-inner{grid-template-columns: 1fr}
+      .span6, .span4{grid-column: span 12}
       table{min-width: 720px}
     }
   </style>
@@ -297,16 +385,22 @@
   <div class="nav">
     <div class="nav-inner">
       <div class="brand">
-        <span class="dot"></span>
-        <span>X-IoMT</span>
+        <div class="brand-badge">XI</div>
+        <div>
+          <div>X-IoMT</div>
+          <small>IoMT Cross Layer Dataset</small>
+        </div>
       </div>
-      <div class="nav-links">
+
+      <div class="links">
         <a href="#summary">Summary</a>
         <a href="#glance">At a glance</a>
+        <a href="#layout">Layout</a>
         <a href="#download">Download</a>
         <a href="#schema">Schema</a>
         <a href="#cite">Cite</a>
         <a href="#contact">Contact</a>
+        <button class="btn-icon" id="themeBtn" type="button" aria-label="Toggle theme">☾ Theme</button>
       </div>
     </div>
   </div>
@@ -316,105 +410,89 @@
       <div class="hero-inner">
         <div>
           <div class="kicker">
-            <span class="pill">v1.0 (2025-11)</span>
-            <span>Cross-layer IoMT anomaly dataset + adversarial robustness</span>
+            <span class="pill">⚑ v1.0 (2025-11)</span>
+            <span>Cross-layer IoMT anomaly detection + adversarial robustness</span>
           </div>
 
           <h1>IoMT Cross Layer Dataset (X-IoMT)</h1>
           <p class="subtitle">
-            A publicly available dataset for anomaly detection research in Internet of Medical Things (IoMT) environments,
-            with cross-layer coverage across perception, network, and application layers, plus FGSM/PGD adversarial samples.
+            A publicly available dataset for anomaly detection research in Internet of Medical Things (IoMT) environments.
+            It provides cross-layer coverage across the perception, network, and application layers, and includes benign,
+            malicious, and FGSM/PGD adversarially perturbed samples under <span class="mono">L₂</span> and <span class="mono">L∞</span> norms.
           </p>
 
-          <div class="hero-cta">
-            <a class="btn primary" href="https://github.com/RuiPintoUBI/X-IoMTDataset" target="_blank" rel="noopener">
-              <span>GitHub Repository</span> <small>↗</small>
-            </a>
+          <div class="cta">
+            <a class="btn primary" href="https://github.com/RuiPintoUBI/X-IoMTDataset" target="_blank" rel="noopener">Repository ↗</a>
             <a class="btn" href="#download">Download</a>
             <a class="btn" href="#cite">Cite this work</a>
           </div>
 
-          <div class="tagrow">
+          <div class="badges">
             <span class="tag">iot</span>
             <span class="tag">iomt</span>
             <span class="tag good">anomaly-detection</span>
-            <span class="tag">traffic-classification</span>
             <span class="tag warn">fgsm</span>
             <span class="tag warn">pgd</span>
-            <span class="tag">binary-classification</span>
-            <span class="tag">multiclass-classification</span>
+            <span class="tag">traffic-classification</span>
+            <span class="tag">benchmarking</span>
           </div>
         </div>
 
-        <aside class="hero-aside" aria-label="At a glance">
-          <div class="stat">
-            <b>Size</b>
-            <span>923 files • 2.8G</span>
-          </div>
-          <div class="stat">
-            <b>Records</b>
-            <span>Original: 1,579,704<br/>Augmented: 12,105,496<br/>Complete: 13,685,200</span>
-          </div>
-          <div class="stat">
-            <b>Format</b>
-            <span>CSV (from PCAP + features)</span>
-          </div>
-          <div class="stat">
-            <b>Protocols</b>
-            <span>IP/TCP • HTTP • MQTT</span>
-          </div>
+        <aside class="aside" aria-label="At a glance metrics">
+          <div class="metric"><b>Size</b><span>923 files • 2.8G</span></div>
+          <div class="metric"><b>Format</b><span>CSV (from PCAP + features)</span></div>
+          <div class="metric"><b>Records</b><span>Original: 1,579,704<br/>Augmented: 12,105,496<br/>Complete: 13,685,200</span></div>
+          <div class="metric"><b>Protocols</b><span>IP/TCP • HTTP • MQTT</span></div>
         </aside>
       </div>
     </header>
 
     <section id="summary" class="grid">
-      <div class="card">
+      <article class="card span12">
         <h2>Dataset summary</h2>
         <p>
-          <b>X-IoMT</b> is a publicly available dataset for anomaly detection in IoMT environments. It addresses the
-          limitations of datasets that focus on a single layer or narrow attack types by offering cross-layer visibility
-          across the <b>perception</b>, <b>network</b>, and <b>application</b> layers. It includes both benign and malicious
-          traffic, plus adversarially perturbed samples generated with <b>FGSM</b> and <b>PGD</b> under <span class="mono">L₂</span>
-          and <span class="mono">L∞</span> norms to evaluate robustness under common and adversarial conditions.
+          X-IoMT addresses limitations of existing datasets that focus on a single layer or narrow attack type by providing
+          cross-layer coverage across the perception, network, and application layers of IoT architectures. It contains both
+          benign and malicious traffic, including adversarially perturbed samples generated using FGSM and PGD under
+          <span class="mono">L₂</span> and <span class="mono">L∞</span> norms. These augmentations support evaluation of models under common and
+          adversarial conditions, enabling development of robust anomaly detection with multi-layer visibility.
         </p>
 
         <details>
           <summary>Reproducibility setup <span>(seeds + environment)</span></summary>
-          <p class="muted" style="margin-top:10px">
-            All experiments used fixed random seeds for repeatability (NumPy and scikit-learn seed = 42; TensorFlow seed = 42).
-            Dataset generation and model training ran on a workstation with an NVIDIA GeForce RTX 5060 Ti GPU and an AMD-class CPU
-            on Linux. Software: Python 3.10, scikit-learn 1.4, NumPy 1.26, pandas 2.1, TensorFlow 2.21.
+          <p style="margin-top:10px">
+            Fixed random seeds: NumPy and scikit-learn = 42; TensorFlow = 42. Dataset generation and model training on a Linux
+            workstation with NVIDIA GeForce RTX 5060 Ti GPU and an AMD-class CPU. Software: Python 3.10, scikit-learn 1.4,
+            NumPy 1.26, pandas 2.1, TensorFlow 2.21.
           </p>
         </details>
-      </div>
+      </article>
     </section>
 
-    <section id="glance" class="grid cards-3">
-      <div class="card">
-        <h2>Labels</h2>
-        <p class="muted">
-          <span class="mono">anomaly.layer</span> (Perception, Network, Application)<br/>
-          <span class="mono">anomaly.name</span> (anomaly type/name)<br/>
-          <span class="mono">anomaly.label</span> (0 = Normal, 1 = Anomaly)
+    <section id="glance" class="grid">
+      <article class="card span6">
+        <h2>At a glance</h2>
+        <p>
+          <b>Name:</b> IoMT Cross Layer Dataset (X-IoMT)<br/>
+          <b>Version:</b> ⚑ v1.0 (2025-11)<br/>
+          <b>Labels:</b> <span class="mono">anomaly.layer</span>, <span class="mono">anomaly.name</span>, <span class="mono">anomaly.label</span><br/>
+          <b>Capture scope:</b> traffic between IoT nodes and servers/MQTT brokers<br/>
+          <b>Intended use:</b> anomaly detection, traffic classification, IoT/IoMT security research, benchmarking
         </p>
-      </div>
-      <div class="card">
-        <h2>Capture scope</h2>
-        <p class="muted">
-          Traffic between IoT nodes and servers / MQTT brokers.
-          Designed for multi-layer anomaly detection and benchmarking.
+      </article>
+
+      <article class="card span6">
+        <h2>Labels & layers</h2>
+        <p>
+          <span class="mono">anomaly.layer</span>: (0=Normal, 1=Perception, 2=Network, 3=Application)<br/>
+          <span class="mono">anomaly.name</span>: anomaly type/name (e.g., DoS, overheating, abnormal clinical data)<br/>
+          <span class="mono">anomaly.label</span>: 0 = Normal, 1 = Anomaly
         </p>
-      </div>
-      <div class="card">
-        <h2>Use cases</h2>
-        <p class="muted">
-          Anomaly detection • traffic classification • IoT/IoMT security research • benchmarking • adversarial robustness evaluation.
-        </p>
-      </div>
+      </article>
     </section>
 
     <section id="layout" class="grid">
-      <div class="card">
+      <article class="card span12">
         <h2>Repository layout</h2>
         <pre><code>X-IoMTDataset/
 |── OriginalDataset/
@@ -445,111 +523,118 @@
 │   ├── adv_out_pgd_linf_eps0.1_part_001.csv … part_119.csv               # PGD L∞   ε = 0.1
 │   ├── adv_out_pgd_linf_eps0.2_part_001.csv … part_119.csv               # PGD L∞   ε = 0.2
 │   └── adv_out_pgd_linf_eps0.05_part_001.csv … part_003.csv              # PGD L∞   ε = 0.05</code></pre>
-      </div>
+      </article>
     </section>
 
     <section id="download" class="grid">
-      <div class="card">
+      <article class="card span12">
         <h2>Download</h2>
-        <p class="muted">Use Git LFS for the large dataset files:</p>
+        <p>Use Git LFS for large dataset files:</p>
         <pre><code>git lfs install
 git clone https://github.com/RuiPintoUBI/X-IoMTDataset.git</code></pre>
-      </div>
+      </article>
     </section>
 
     <section id="schema" class="grid">
-      <div class="card">
+      <article class="card span12">
         <h2>Schema</h2>
-        <p class="muted">Features obtained from packet capture conversion and curated labeling.</p>
+        <p>Dataset features obtained from packet capture conversion and curated labeling:</p>
 
-        <div class="table-wrap" role="region" aria-label="Dataset schema table">
-          <table>
-            <thead>
-              <tr>
-                <th style="width:60px">#</th>
-                <th style="width:240px">Feature</th>
-                <th>Description</th>
-                <th style="width:220px">Category</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>1</td><td class="mono">frame.time</td><td>Timestamp of packet capture (Unix epoch time)</td><td>Packet and Network Features</td></tr>
-              <tr><td>2</td><td class="mono">ip.src_host</td><td>Source IP address</td><td>Packet and Network Features</td></tr>
-              <tr><td>3</td><td class="mono">ip.dst_host</td><td>Destination IP address</td><td>Packet and Network Features</td></tr>
-              <tr><td>4</td><td class="mono">tcp.srcport</td><td>Source TCP port number</td><td>Packet and Network Features</td></tr>
-              <tr><td>5</td><td class="mono">tcp.dstport</td><td>Destination TCP port number</td><td>Packet and Network Features</td></tr>
-              <tr><td>6</td><td class="mono">tcp.seq</td><td>TCP sequence number</td><td>Packet and Network Features</td></tr>
-              <tr><td>7</td><td class="mono">tcp.ack</td><td>TCP acknowledgment number</td><td>Packet and Network Features</td></tr>
-              <tr><td>8</td><td class="mono">tcp.flags.syn</td><td>TCP control flag (boolean)</td><td>Packet and Network Features</td></tr>
-              <tr><td>9</td><td class="mono">tcp.flags.ack</td><td>TCP control flag (boolean)</td><td>Packet and Network Features</td></tr>
-              <tr><td>10</td><td class="mono">tcp.flags.fin</td><td>TCP control flag (boolean)</td><td>Packet and Network Features</td></tr>
-              <tr><td>11</td><td class="mono">tcp.flags.reset</td><td>TCP control flag (boolean)</td><td>Packet and Network Features</td></tr>
-              <tr><td>12</td><td class="mono">tcp.flags.push</td><td>TCP control flag (boolean)</td><td>Packet and Network Features</td></tr>
-              <tr><td>13</td><td class="mono">tcp.flags.urg</td><td>TCP control flag (boolean)</td><td>Packet and Network Features</td></tr>
-              <tr><td>14</td><td class="mono">tcp.len</td><td>Length of TCP segment</td><td>Packet and Network Features</td></tr>
-              <tr><td>15</td><td class="mono">http.request.method</td><td>HTTP request method (e.g., GET, POST)</td><td>HTTP Protocol Features</td></tr>
-              <tr><td>16</td><td class="mono">http.request.full_uri</td><td>Full URI requested</td><td>HTTP Protocol Features</td></tr>
-              <tr><td>17</td><td class="mono">http.request.version</td><td>HTTP protocol version</td><td>HTTP Protocol Features</td></tr>
-              <tr><td>18</td><td class="mono">http.request.uri.query</td><td>Query string of the request</td><td>HTTP Protocol Features</td></tr>
-              <tr><td>19</td><td class="mono">http.referer</td><td>Referring page</td><td>HTTP Protocol Features</td></tr>
-              <tr><td>20</td><td class="mono">http.content_length</td><td>Content length of request/response</td><td>HTTP Protocol Features</td></tr>
-              <tr><td>21</td><td class="mono">http.file_data</td><td>Content in the HTTP request</td><td>HTTP Protocol Features</td></tr>
-              <tr><td>22</td><td class="mono">http.response</td><td>Status code HTTP response</td><td>HTTP Protocol Features</td></tr>
-              <tr><td>23</td><td class="mono">mqtt.msgtype</td><td>Type of MQTT message</td><td>MQTT Protocol Features</td></tr>
-              <tr><td>24</td><td class="mono">mqtt.msg</td><td>Raw message payload</td><td>MQTT Protocol Features</td></tr>
-              <tr><td>25</td><td class="mono">mqtt.topic</td><td>MQTT topic name</td><td>MQTT Protocol Features</td></tr>
-              <tr><td>26</td><td class="mono">mqtt.topic_len</td><td>Length of topic string</td><td>MQTT Protocol Features</td></tr>
-              <tr><td>27</td><td class="mono">mqtt.conflags</td><td>Connection flags</td><td>MQTT Protocol Features</td></tr>
-              <tr><td>28</td><td class="mono">mqtt.conflag.cleansess</td><td>Clean session flag (boolean)</td><td>MQTT Protocol Features</td></tr>
-              <tr><td>29</td><td class="mono">mqtt.len</td><td>Length of MQTT message</td><td>MQTT Protocol Features</td></tr>
-              <tr><td>30</td><td class="mono">mqtt.proto_len</td><td>Protocol name length</td><td>MQTT Protocol Features</td></tr>
-              <tr><td>31</td><td class="mono">mqtt.protoname</td><td>Protocol name (e.g., "MQTT")</td><td>MQTT Protocol Features</td></tr>
-              <tr><td>32</td><td class="mono">mqtt.ver</td><td>Protocol version number</td><td>MQTT Protocol Features</td></tr>
-              <tr><td>33</td><td class="mono">mqtt.msg_decoded_as</td><td>Decoded type of message</td><td>MQTT Protocol Features</td></tr>
-              <tr><td>34</td><td class="mono">mqtt.conack.flags</td><td>Connection acknowledgment flags</td><td>MQTT Protocol Features</td></tr>
-              <tr><td>35</td><td class="mono">mqtt.hdrflags</td><td>Header flags of MQTT packet</td><td>MQTT Protocol Features</td></tr>
-              <tr><td>36</td><td class="mono">mqtt.qos</td><td>Quality of Service level</td><td>MQTT Protocol Features</td></tr>
-              <tr><td>37</td><td class="mono">mqtt.retain</td><td>Retain flag</td><td>MQTT Protocol Features</td></tr>
-              <tr><td>38</td><td class="mono">mqtt.dupflag</td><td>Duplicate delivery flag</td><td>MQTT Protocol Features</td></tr>
-              <tr><td>39</td><td class="mono">ip.ttl</td><td>Time-To-Live</td><td>Packet and Network Features</td></tr>
-              <tr><td>40</td><td class="mono">tcp.window_size</td><td>Advertised TCP receive window size</td><td>Packet and Network Features</td></tr>
-              <tr><td>41</td><td class="mono">http.user_agent</td><td>Client application generating the request</td><td>HTTP Protocol Features</td></tr>
-              <tr><td>42</td><td class="mono">http.host</td><td>Host header of the HTTP request</td><td>HTTP Protocol Features</td></tr>
-              <tr><td>43</td><td class="mono">mqtt.clientid</td><td>Identifier of MQTT client</td><td>MQTT Protocol Features</td></tr>
-              <tr><td>44</td><td class="mono">frame.len</td><td>Size of the frame (in bytes)</td><td>Packet and Network Features</td></tr>
-              <tr><td>45</td><td class="mono">frame.protocols</td><td>Protocols involved in the packet (e.g., eth:ip:tcp:http)</td><td>Packet and Network Features</td></tr>
-              <tr><td>46</td><td class="mono">Temperature</td><td>Body temperature</td><td>Device/Patient Telemetry</td></tr>
-              <tr><td>47</td><td class="mono">Memory</td><td>Memory usage on the device (in %)</td><td>Device/Patient Telemetry</td></tr>
-              <tr><td>48</td><td class="mono">In_Temperature</td><td>Internal device temperature sensor reading</td><td>Device/Patient Telemetry</td></tr>
-              <tr><td>49</td><td class="mono">CPU</td><td>CPU clock rate of the device (in MHz)</td><td>Device/Patient Telemetry</td></tr>
-              <tr><td>50</td><td class="mono">RSSI</td><td>Received Signal Strength Indicator (dBm)</td><td>Device/Patient Telemetry</td></tr>
-              <tr><td>51</td><td class="mono">MAC_extracted</td><td>Device MAC address</td><td>Device/Patient Telemetry</td></tr>
-              <tr><td>52</td><td class="mono">HR</td><td>Heart rate measurement (bpm)</td><td>Device/Patient Telemetry</td></tr>
-              <tr><td>53</td><td class="mono">Pulse</td><td>Pulse value</td><td>Device/Patient Telemetry</td></tr>
-              <tr><td>54</td><td class="mono">RESP</td><td>Respiration rate</td><td>Device/Patient Telemetry</td></tr>
-              <tr><td>55</td><td class="mono">SpO2</td><td>Blood oxygen saturation (%)</td><td>Device/Patient Telemetry</td></tr>
-              <tr><td>56</td><td class="mono">anomaly.layer</td><td>Layer of anomaly (0=Normal, 1=Perception, 2=Network, 3=Application)</td><td>Labels</td></tr>
-              <tr><td>57</td><td class="mono">anomaly.name</td><td>Type of anomaly (e.g., DoS, overheating, abnormal clinical data)</td><td>Labels</td></tr>
-              <tr><td>58</td><td class="mono">anomaly.label</td><td>Ground truth label (Normal = 0, Anomaly = 1)</td><td>Labels</td></tr>
-            </tbody>
-          </table>
-        </div>
+        <details open>
+          <summary>Show features table <span>(58 columns)</span></summary>
+          <div class="table-wrap" role="region" aria-label="Dataset schema">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:56px">#</th>
+                  <th style="width:240px">Feature</th>
+                  <th>Description</th>
+                  <th style="width:220px">Category</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td class="mono">frame.time</td><td>Timestamp of packet capture (Unix epoch time)</td><td>Packet and Network Features</td></tr>
+                <tr><td>2</td><td class="mono">ip.src_host</td><td>Source IP address</td><td>Packet and Network Features</td></tr>
+                <tr><td>3</td><td class="mono">ip.dst_host</td><td>Destination IP address</td><td>Packet and Network Features</td></tr>
+                <tr><td>4</td><td class="mono">tcp.srcport</td><td>Source TCP port number</td><td>Packet and Network Features</td></tr>
+                <tr><td>5</td><td class="mono">tcp.dstport</td><td>Destination TCP port number</td><td>Packet and Network Features</td></tr>
+                <tr><td>6</td><td class="mono">tcp.seq</td><td>TCP sequence number</td><td>Packet and Network Features</td></tr>
+                <tr><td>7</td><td class="mono">tcp.ack</td><td>TCP acknowledgment number</td><td>Packet and Network Features</td></tr>
+                <tr><td>8</td><td class="mono">tcp.flags.syn</td><td>TCP control flag (boolean)</td><td>Packet and Network Features</td></tr>
+                <tr><td>9</td><td class="mono">tcp.flags.ack</td><td>TCP control flag (boolean)</td><td>Packet and Network Features</td></tr>
+                <tr><td>10</td><td class="mono">tcp.flags.fin</td><td>TCP control flag (boolean)</td><td>Packet and Network Features</td></tr>
+                <tr><td>11</td><td class="mono">tcp.flags.reset</td><td>TCP control flag (boolean)</td><td>Packet and Network Features</td></tr>
+                <tr><td>12</td><td class="mono">tcp.flags.push</td><td>TCP control flag (boolean)</td><td>Packet and Network Features</td></tr>
+                <tr><td>13</td><td class="mono">tcp.flags.urg</td><td>TCP control flag (boolean)</td><td>Packet and Network Features</td></tr>
+                <tr><td>14</td><td class="mono">tcp.len</td><td>Length of TCP segment</td><td>Packet and Network Features</td></tr>
+                <tr><td>15</td><td class="mono">http.request.method</td><td>HTTP request method (e.g., GET, POST)</td><td>HTTP Protocol Features</td></tr>
+                <tr><td>16</td><td class="mono">http.request.full_uri</td><td>Full URI requested</td><td>HTTP Protocol Features</td></tr>
+                <tr><td>17</td><td class="mono">http.request.version</td><td>HTTP protocol version</td><td>HTTP Protocol Features</td></tr>
+                <tr><td>18</td><td class="mono">http.request.uri.query</td><td>Query string of the request</td><td>HTTP Protocol Features</td></tr>
+                <tr><td>19</td><td class="mono">http.referer</td><td>Referring page</td><td>HTTP Protocol Features</td></tr>
+                <tr><td>20</td><td class="mono">http.content_length</td><td>Content length of request/response</td><td>HTTP Protocol Features</td></tr>
+                <tr><td>21</td><td class="mono">http.file_data</td><td>Content in the HTTP request</td><td>HTTP Protocol Features</td></tr>
+                <tr><td>22</td><td class="mono">http.response</td><td>Status code HTTP response</td><td>HTTP Protocol Features</td></tr>
+                <tr><td>23</td><td class="mono">mqtt.msgtype</td><td>Type of MQTT message</td><td>MQTT Protocol Features</td></tr>
+                <tr><td>24</td><td class="mono">mqtt.msg</td><td>Raw message payload</td><td>MQTT Protocol Features</td></tr>
+                <tr><td>25</td><td class="mono">mqtt.topic</td><td>MQTT topic name</td><td>MQTT Protocol Features</td></tr>
+                <tr><td>26</td><td class="mono">mqtt.topic_len</td><td>Length of topic string</td><td>MQTT Protocol Features</td></tr>
+                <tr><td>27</td><td class="mono">mqtt.conflags</td><td>Connection flags</td><td>MQTT Protocol Features</td></tr>
+                <tr><td>28</td><td class="mono">mqtt.conflag.cleansess</td><td>Clean session flag (boolean)</td><td>MQTT Protocol Features</td></tr>
+                <tr><td>29</td><td class="mono">mqtt.len</td><td>Length of MQTT message</td><td>MQTT Protocol Features</td></tr>
+                <tr><td>30</td><td class="mono">mqtt.proto_len</td><td>Protocol name lenght</td><td>MQTT Protocol Features</td></tr>
+                <tr><td>31</td><td class="mono">mqtt.protoname</td><td>Protocol name (e.g., "MQTT")</td><td>MQTT Protocol Features</td></tr>
+                <tr><td>32</td><td class="mono">mqtt.ver</td><td>Protocol version number</td><td>MQTT Protocol Features</td></tr>
+                <tr><td>33</td><td class="mono">mqtt.msg_decoded_as</td><td>Decoded type of message</td><td>MQTT Protocol Features</td></tr>
+                <tr><td>34</td><td class="mono">mqtt.conack.flags</td><td>Connection acknowledgment flags</td><td>MQTT Protocol Features</td></tr>
+                <tr><td>35</td><td class="mono">mqtt.hdrflags</td><td>Header flags of MQTT packet</td><td>MQTT Protocol Features</td></tr>
+                <tr><td>36</td><td class="mono">mqtt.qos</td><td>Quality of Service level</td><td>MQTT Protocol Features</td></tr>
+                <tr><td>37</td><td class="mono">mqtt.retain</td><td>Retain flag</td><td>MQTT Protocol Features</td></tr>
+                <tr><td>38</td><td class="mono">mqtt.dupflag</td><td>Duplicate delivery flag</td><td>MQTT Protocol Features</td></tr>
+                <tr><td>39</td><td class="mono">ip.ttl</td><td>Time-To-Live</td><td>Packet and Network Features</td></tr>
+                <tr><td>40</td><td class="mono">tcp.window_size</td><td>Advertised TCP receive window size</td><td>Packet and Network Features</td></tr>
+                <tr><td>41</td><td class="mono">http.user_agent</td><td>Client application generating the request</td><td>HTTP Protocol Features</td></tr>
+                <tr><td>42</td><td class="mono">http.host</td><td>Host header of the HTTP request</td><td>HTTP Protocol Features</td></tr>
+                <tr><td>43</td><td class="mono">mqtt.clientid</td><td>Identifier of MQTT client</td><td>MQTT Protocol Features</td></tr>
+                <tr><td>44</td><td class="mono">frame.len</td><td>Size of the frame (in bytes)</td><td>Packet and Network Features</td></tr>
+                <tr><td>45</td><td class="mono">frame.protocols</td><td>Protocols involved in the packet (e.g., eth:ip:tcp:http)</td><td>Packet and Network Features</td></tr>
+                <tr><td>46</td><td class="mono">Temperature</td><td>Body temperature</td><td>Device/Patient Telemetry</td></tr>
+                <tr><td>47</td><td class="mono">Memory</td><td>Memory usage on the device (in %)</td><td>Device/Patient Telemetry</td></tr>
+                <tr><td>48</td><td class="mono">In_Temperature</td><td>Internal device temperature sensor reading</td><td>Device/Patient Telemetry</td></tr>
+                <tr><td>49</td><td class="mono">CPU</td><td>CPU clock rate of the device (in MHz)</td><td>Device/Patient Telemetry</td></tr>
+                <tr><td>50</td><td class="mono">RSSI</td><td>Received Signal Strength Indicator (dBm)</td><td>Device/Patient Telemetry</td></tr>
+                <tr><td>51</td><td class="mono">MAC_extracted</td><td>Device MAC address</td><td>Device/Patient Telemetry</td></tr>
+                <tr><td>52</td><td class="mono">HR</td><td>Heart rate measurement (bpm)</td><td>Device/Patient Telemetry</td></tr>
+                <tr><td>53</td><td class="mono">Pulse</td><td>Pulse value</td><td>Device/Patient Telemetry</td></tr>
+                <tr><td>54</td><td class="mono">RESP</td><td>Respiration rate</td><td>Device/Patient Telemetry</td></tr>
+                <tr><td>55</td><td class="mono">SpO2</td><td>Blood oxygen saturation (%)</td><td>Device/Patient Telemetry</td></tr>
+                <tr><td>56</td><td class="mono">anomaly.layer</td><td>Layer of anomaly (0=Normal, 1=Perception, 2=Network, 3=Application)</td><td>Labels</td></tr>
+                <tr><td>57</td><td class="mono">anomaly.name</td><td>Type of anomaly</td><td>Labels</td></tr>
+                <tr><td>58</td><td class="mono">anomaly.label</td><td>Ground truth label (Normal = 0, Anomaly = 1)</td><td>Labels</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
 
         <details>
           <summary>Changelog <span>(v1.0 → v1.1)</span></summary>
-          <p class="muted" style="margin-top:10px">
+          <p style="margin-top:10px">
             <b>v1.0 (2025-11):</b> Initial public release.<br/>
             <b>v1.1 (2026-01):</b> Improved anomalies and added a small explained implementation.
           </p>
         </details>
-      </div>
+      </article>
     </section>
 
-    <section id="cite" class="grid cards-2">
-      <div class="card">
-        <h2>Cite the paper</h2>
-        <p class="muted">If you use this dataset, please cite the paper and the dataset.</p>
-        <pre><code id="bib-paper">%Article
+    <section id="cite" class="grid">
+      <article class="card span12">
+        <h2>Cite this work</h2>
+        <p>If you use this dataset, please cite the paper and the dataset:</p>
+
+        <div class="grid" style="margin-top:10px">
+          <div class="card span6" style="box-shadow:none">
+            <h2 style="margin-bottom:8px">Paper (BibTeX)</h2>
+            <pre><code id="bib-paper">%Article
 @INPROCEEDINGS{11261583,
   author={Pinto, Rui P. and Silva, Bruno M. C. and Inácio, Pedro R. M.},
   booktitle={2025 23rd International Symposium on Network Computing and Applications (NCA)}, 
@@ -558,12 +643,15 @@ git clone https://github.com/RuiPintoUBI/X-IoMTDataset.git</code></pre>
   pages={255-262},
   keywords={Performance evaluation;Cross layer design;Internet of Medical Things;Machine learning;Reliability;Labeling;Computer crime;Anomaly detection;Standards;Monitoring;Internet of Medical Things (IoMT);Machine Learning (ML);Anomaly Detection;Cybersecurity;Data Labeling},
   doi={10.1109/NCA67271.2025.00047}}</code></pre>
-        <button class="btn" data-copy="#bib-paper" style="margin-top:10px">Copy BibTeX</button>
-      </div>
+            <div class="copy-row">
+              <button class="copy" data-copy="#bib-paper">Copy</button>
+              <span class="note" id="paperNote"></span>
+            </div>
+          </div>
 
-      <div class="card">
-        <h2>Cite the dataset</h2>
-        <pre><code id="bib-dataset">%Dataset
+          <div class="card span6" style="box-shadow:none">
+            <h2 style="margin-bottom:8px">Dataset (BibTeX)</h2>
+            <pre><code id="bib-dataset">%Dataset
 @dataset{XIoMTDataset,
   title       = {X-IoMT},
   author      = {Rui P. Pinto, Bruno M. C. Silva, Pedro R. M. Inácio},
@@ -571,60 +659,73 @@ git clone https://github.com/RuiPintoUBI/X-IoMTDataset.git</code></pre>
   publisher   = {GitHub},
   url         = {(https://github.com/RuiPintoUBI/X-IoMTDataset)}
 }</code></pre>
-        <button class="btn" data-copy="#bib-dataset" style="margin-top:10px">Copy BibTeX</button>
-
-        <div style="margin-top:14px; border-top:1px solid var(--line); padding-top:14px">
-          <h2 style="margin:0 0 8px; font-size:16px;">About</h2>
-          <p class="muted">
-            A cross-layer IoMT anomaly detection dataset with real traffic, labeled attacks, and FGSM/PGD adversarial
-            samples for robust security research.
-          </p>
+            <div class="copy-row">
+              <button class="copy" data-copy="#bib-dataset">Copy</button>
+              <span class="note" id="dataNote"></span>
+            </div>
+          </div>
         </div>
-      </div>
+      </article>
     </section>
 
     <section id="contact" class="grid">
-      <div class="card">
-        <h2>Contact & Issues</h2>
-        <p class="muted">
-          Maintainer: <b>Rui Pedro Pinto (UBI)</b> — <a href="mailto:rui.pinto@ubi.pt">rui.pinto@ubi.pt</a><br/>
-          Please use GitHub Issues for bug reports and questions.
+      <article class="card span12">
+        <h2>Contact • Issues • Acknowledgments</h2>
+        <p>
+          <b>Maintainer:</b> Rui Pedro Pinto (UBI) — <a href="mailto:rui.pinto@ubi.pt">rui.pinto@ubi.pt</a><br/>
+          <b>Issues:</b> Please use GitHub Issues for bug reports and questions.
         </p>
 
         <details>
           <summary>Acknowledgments <span>(funding)</span></summary>
-          <p class="muted" style="margin-top:10px">
-            Funded by national funds through FCT – Fundação para a Ciência e a Tecnologia, I.P., and, when eligible,
+          <p style="margin-top:10px">
+            This work is funded by national funds through FCT – Fundação para a Ciência e a Tecnologia, I.P., and, when eligible,
             co-funded by EU funds under project/support UID/50008/2025 – Instituto de Telecomunicações, with DOI identifier
             <span class="mono">https://doi.org/10.54499/UID/50008/2025</span>.
           </p>
         </details>
-      </div>
+      </article>
     </section>
 
     <footer>
-      <div>© <span id="year"></span> X-IoMT • Built for GitHub Pages</div>
-      <div class="faint">Banner image: <span class="mono">iomt.png</span></div>
+      <div>© <span id="year"></span> X-IoMT • GitHub Pages</div>
+      <div>Banner: <span class="mono">iomt.png</span></div>
     </footer>
   </main>
 
   <script>
-    // Set year
+    // Year
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Copy buttons
-    async function copyText(selector){
-      const el = document.querySelector(selector);
-      const text = el ? el.textContent : "";
-      if(!text) return false;
+    // Theme (remember choice)
+    const root = document.documentElement;
+    const saved = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    if (saved) root.setAttribute("data-theme", saved);
+    else if (prefersDark) root.setAttribute("data-theme", "dark");
 
+    const themeBtn = document.getElementById("themeBtn");
+    function currentTheme(){ return root.getAttribute("data-theme") || "light"; }
+    function setTheme(t){
+      if (t === "light") root.removeAttribute("data-theme");
+      else root.setAttribute("data-theme", t);
+      localStorage.setItem("theme", t);
+      themeBtn.textContent = (t === "dark") ? "☀ Theme" : "☾ Theme";
+    }
+    setTheme(currentTheme());
+    themeBtn.addEventListener("click", () => setTheme(currentTheme() === "dark" ? "light" : "dark"));
+
+    // Copy buttons
+    async function copyFrom(sel){
+      const el = document.querySelector(sel);
+      const txt = el ? el.textContent : "";
+      if(!txt) return false;
       try{
-        await navigator.clipboard.writeText(text);
+        await navigator.clipboard.writeText(txt);
         return true;
       }catch(e){
-        // Fallback
         const ta = document.createElement("textarea");
-        ta.value = text;
+        ta.value = txt;
         document.body.appendChild(ta);
         ta.select();
         const ok = document.execCommand("copy");
@@ -632,14 +733,13 @@ git clone https://github.com/RuiPintoUBI/X-IoMTDataset.git</code></pre>
         return ok;
       }
     }
-
     document.querySelectorAll("[data-copy]").forEach(btn => {
       btn.addEventListener("click", async () => {
         const target = btn.getAttribute("data-copy");
-        const ok = await copyText(target);
-        const old = btn.textContent;
-        btn.textContent = ok ? "Copied ✓" : "Copy failed";
-        setTimeout(() => (btn.textContent = old), 1400);
+        const ok = await copyFrom(target);
+        const note = (target === "#bib-paper") ? document.getElementById("paperNote") : document.getElementById("dataNote");
+        note.textContent = ok ? "Copied ✓" : "Copy failed";
+        setTimeout(()=> note.textContent="", 1200);
       });
     });
   </script>
