@@ -146,6 +146,9 @@
         linear-gradient(180deg, rgba(0,0,0,.18), rgba(7,10,20,.92) 72%),
         url("iomt.png");
     }
+
+
+    
     .hero::after{
       content:"";
       position:absolute; inset:0;
@@ -157,10 +160,7 @@
       pointer-events:none;
       z-index:0;
     }
-    [data-theme="dark"] .hero::after{
-      mix-blend-mode: screen;
-      opacity:.9;
-    }
+
     .hero-inner{
       position:relative; z-index:1;
       padding: 28px 22px 22px;
