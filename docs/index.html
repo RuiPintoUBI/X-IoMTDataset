@@ -99,18 +99,27 @@
       font-weight:800; letter-spacing:-.2px;
     }
     .brand-badge{
-      width:34px; height:34px; border-radius:12px;
-      border:1px solid var(--line);
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,.6), transparent 55%),
-        linear-gradient(135deg,
-          color-mix(in oklab, var(--accent) 22%, transparent),
-          color-mix(in oklab, var(--accent2) 18%, transparent)
-        );
-      display:grid; place-items:center;
-      box-shadow: 0 10px 24px rgba(0,0,0,.08);
-      font-size:13px;
-    }
+  width:34px;
+  height:34px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,.4), transparent 55%),
+    linear-gradient(135deg,
+      color-mix(in oklab, var(--accent) 22%, transparent),
+      color-mix(in oklab, var(--accent2) 18%, transparent)
+    );
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+}
+
+.brand-badge img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  padding:4px;          /* adjust if needed */
+}
     .brand small{display:block; font-weight:600; color:var(--muted); margin-top:2px; letter-spacing:0}
     .links{
       display:flex; flex-wrap:wrap; gap:6px;
@@ -399,7 +408,9 @@
   <div class="nav">
     <div class="nav-inner">
       <div class="brand">
-        <div class="brand-badge">XI</div>
+        <div class="brand-badge">
+         <img src="badge.png" alt="XI">
+        </div>
         <div>
           <div>X-IoMT</div>
           <small>IoMT Cross Layer Dataset</small>
