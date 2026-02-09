@@ -36,6 +36,11 @@
       --heroBlend: multiply;
       --heroOverlayOpacity: .65;
 
+      --pill-bg: color-mix(in oklab, var(--accent) 18%, white);
+      --pill-border: color-mix(in oklab, var(--accent) 55%, white);
+      --pill-text: var(--accent);
+      --pill-glow: none;
+
     }
 
     /* Dark theme */
@@ -51,6 +56,12 @@
 
       --heroBlend: screen;
       --heroOverlayOpacity: .90;
+
+      --pill-bg: rgba(37, 99, 235, .25);
+      --pill-border: rgba(99, 179, 255, .85);
+      --pill-text: #eaf3ff;
+      --pill-glow: 0 0 18px rgba(99,179,255,.55);
+      
     }
 
     *{box-sizing:border-box}
@@ -692,7 +703,6 @@ git clone https://github.com/RuiPintoUBI/X-IoMTDataset.git</code></pre>
 
     <footer>
       <div>© <span id="year"></span> X-IoMT • GitHub Pages</div>
-      <div>Banner: <span class="mono">iomt.png</span></div>
     </footer>
   </main>
 
