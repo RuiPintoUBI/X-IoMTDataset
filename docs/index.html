@@ -32,6 +32,10 @@
 
       --heroH: 340px;
       --max: 1200px;
+
+      --heroBlend: multiply;
+      --heroOverlayOpacity: .65;
+
     }
 
     /* Dark theme */
@@ -44,6 +48,9 @@
       --muted: rgba(255,255,255,.70);
       --faint: rgba(255,255,255,.52);
       --shadow: 0 22px 80px rgba(0,0,0,.45);
+
+      --heroBlend: screen;
+      --heroOverlayOpacity: .90;
     }
 
     *{box-sizing:border-box}
@@ -151,8 +158,8 @@
       background:
         radial-gradient(900px 420px at 12% 18%, rgba(37,99,235,.24), transparent 60%),
         radial-gradient(900px 420px at 88% 10%, rgba(124,58,237,.18), transparent 60%);
-      mix-blend-mode: multiply;
-      opacity:.65;
+      mix-blend-mode: var(--heroBlend);
+      opacity: var(--heroOverlayOpacity);
       pointer-events:none;
       z-index:0;
     }
