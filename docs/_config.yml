@@ -1,0 +1,4 @@
+theme: minima
+title: X-IoMT Dataset
+description: Cross-layer IoMT anomaly detection dataset with adversarial augmentations
+markdown: kramdown
