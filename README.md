@@ -42,6 +42,7 @@ If you use this dataset, please cite the paper and the dataset:
   year        = {2025},
   publisher   = {GitHub},
   url         = {(https://github.com/RuiPintoUBI/X-IoMTDataset)}
+  doi={10.5281/zenodo.18598934}}
 }
 ```
 
