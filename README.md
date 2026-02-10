@@ -36,13 +36,13 @@ If you use this dataset, please cite the paper and the dataset:
 
 
 %Dataset
-@dataset{XIoMTDataset,
-  title       = {X-IoMT},
-  author      = {Rui P. Pinto, Bruno M. C. Silva, Pedro R. M. Inácio},
-  year        = {2025},
-  publisher   = {GitHub},
-  url         = {(https://github.com/RuiPintoUBI/X-IoMTDataset)}
-  doi={10.5281/zenodo.18598934}}
+@dataset{Pinto2025XIoMT,
+  title     = {{X-IoMT}: A Cross-Layer Dataset for Anomaly Detection in the Internet of Medical Things},
+  author    = {Pinto, Rui P. and Silva, Bruno M. C. and In{\'a}cio, Pedro R. M.},
+  year      = {2025},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.18598934},
+  url       = {https://doi.org/10.5281/zenodo.18598934}
 }
 ```
 
