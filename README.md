@@ -23,6 +23,18 @@ If you use this dataset, please cite the paper and the dataset:
 
 ```bibtex
 %Article
+@ARTICLE{11395976,
+  author={Pinto, Rui P. O. and Silva, Bruno M. C. and Inácio, Pedro R. M.},
+  journal={IEEE Internet of Things Journal}, 
+  title={X-IoMT: A Cross-Layer IoMT Dataset for Anomaly Detection with FGSM and PGD-Based Adversarial Augmentation}, 
+  year={2026},
+  volume={},
+  number={},
+  pages={1-1},
+  keywords={Anomaly detection;Medical services;Biomedical monitoring;Sensors;Monitoring;Resilience;Safety;Biological system modeling;Benchmark testing;Reviews;Internet of Medical Things (IoMT);Machine Learning;Adversarial Augmentation;Anomaly Detection;Cybersecurity},
+  doi={10.1109/JIOT.2026.3664373}}
+
+%Article
 @INPROCEEDINGS{11261583,
   author={Pinto, Rui P. and Silva, Bruno M. C. and Inácio, Pedro R. M.},
   booktitle={2025 23rd International Symposium on Network Computing and Applications (NCA)}, 
